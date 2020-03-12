@@ -14,7 +14,7 @@ class Product extends React.Component {
   };
   delete_item = () => {
     const id = this.props.product.id;
-    this.delete_item(id);
+    this.props.delete_item(id);
   };
   render() {
     return (

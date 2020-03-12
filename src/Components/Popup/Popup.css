@@ -1,0 +1,20 @@
+.popup_inner {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 20%;
+  bottom: 20%;
+  overflow: auto;
+  margin: auto;
+  border-radius: 5px;
+  background: white;
+}
+
+/* .popup_header {
+  background-color: #ccc;
+  border-bottom: 1px solid #000;
+}
+
+.button {
+  text-align: right;
+} */

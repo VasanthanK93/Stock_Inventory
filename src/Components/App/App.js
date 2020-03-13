@@ -19,90 +19,118 @@ class App extends React.Component {
     this.delete_item = this.delete_item.bind(this);
   }
 
-  fetch_data = () => {
-    axios
-      .get(
+  fetch_data = async () => {
+    try {
+      let response = await axios.get(
         "https://us-central1-stock-inventory-f75b5.cloudfunctions.net/api/getStocks"
-      )
-      .then(response => {
-        this.setState({ ProductList: response.data });
-      });
+      );
+      this.setState({ ProductList: response.data });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  post_data = (form_Data, id) => {
-    axios
-      .put(
+  post_data = async (form_Data, id) => {
+    try {
+      let response = await axios.put(
         "https://us-central1-stock-inventory-f75b5.cloudfunctions.net/api/addStock/" +
           id,
         form_Data
-      )
-      .then(response => {
-        if (response.status === 200) {
-          this.togglePopup();
-          this.fetch_data();
-        }
-      });
+      );
+      if (response.status === 200) {
+        this.togglePopup();
+        this.fetch_data();
+        return response.status;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  edit_data = (form_Data, id) => {
-    axios
-      .put(
+  edit_data = async (form_Data, id) => {
+    try {
+      let response = await axios.put(
         "https://us-central1-stock-inventory-f75b5.cloudfunctions.net/api/editStock/" +
           id,
         form_Data
-      )
-      .then(response => {
-        if (response.status === 200) {
-          this.togglePopup();
-          this.fetch_data();
-        }
-      });
+      );
+      if (response.status === 200) {
+        this.fetch_data();
+        return response.status;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  delete_data = id => {
-    axios
-      .delete(
+  delete_data = async id => {
+    try {
+      let response = await axios.delete(
         "https://us-central1-stock-inventory-f75b5.cloudfunctions.net/api/deleteStocks/" +
           id
-      )
-      .then(response => {
-        if (response.status === 200) {
-          this.fetch_data();
-        }
-      });
+      );
+      if (response.status === 200) {
+        this.fetch_data();
+        return response.status;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  search_data = val => {
-    axios
-      .get(
+  search_data = async val => {
+    try {
+      let response = await axios.get(
         "https://us-central1-stock-inventory-f75b5.cloudfunctions.net/api/getStocks/" +
           val
-      )
-      .then(response => {
+      );
+      if (response.status === 200) {
         this.setState({ ProductList: response.data });
-      });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   componentDidMount() {
     this.fetch_data();
   }
 
-  add_item = form_Data => {
-    let id = this.state.ProductList.length;
-    form_Data = { ...form_Data, id: id };
-    this.post_data(form_Data, id);
+  add_item = async form_Data => {
+    try {
+      let id = this.state.ProductList.length;
+      form_Data = { ...form_Data, id: id };
+      let response = await this.post_data(form_Data, id);
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  edit_item = form_Data => {
-    let id = form_Data.id;
-    this.edit_data(form_Data, id);
+  edit_item = async form_Data => {
+    try {
+      let id = form_Data.id;
+      let response = await this.edit_data(form_Data, id);
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  delete_item = id => {
-    this.delete_data(id);
+  delete_item = async id => {
+    try {
+      let response = await this.delete_data(id);
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
   };
-  search_item = val => {
-    this.search_data(val);
+  search_item = async val => {
+    try {
+      let response = await this.search_data(val);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   togglePopup = () => {

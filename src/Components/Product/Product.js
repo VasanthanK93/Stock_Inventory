@@ -8,6 +8,7 @@ class Product extends React.Component {
       showPopup: false
     };
     this.togglePopup = this.togglePopup.bind(this);
+    this.delete_item = this.delete_item.bind(this);
   }
   togglePopup = () => {
     this.setState({ showPopup: !this.state.showPopup });
@@ -45,13 +46,13 @@ class Product extends React.Component {
             {this.state.showPopup ? (
               <Popup
                 Method="Edit Item"
+                show_popup={this.togglePopup.bind(this)}
                 edit_Item={this.props.edit_Item}
                 product={this.props.product}
                 closePopup={this.togglePopup.bind(this)}
               />
             ) : null}
             <button
-              href="#"
               className="btn btn-outline-danger"
               onClick={this.delete_item}
             >

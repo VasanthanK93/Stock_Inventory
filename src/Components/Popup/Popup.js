@@ -33,26 +33,37 @@ class Popup extends React.Component {
     });
   };
 
-  form_add = e => {
-    e.preventDefault();
-    const form_data = {
-      product_Name: this.state.name,
-      price: this.state.price,
-      quantity: this.state.quantity
-    };
-    this.props.add_Item(form_data);
+  form_add = async e => {
+    try {
+      e.preventDefault();
+      const form_data = {
+        product_Name: this.state.name,
+        price: this.state.price,
+        quantity: this.state.quantity
+      };
+      let response = await this.props.add_Item(form_data);
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  form_edit = e => {
-    e.preventDefault();
-    const form_data = {
-      id: this.props.product.id,
-      product_Name: document.getElementById("product_Name").value,
-      price: document.getElementById("price").value,
-      quantity: document.getElementById("quantity").value
-    };
-    console.log(form_data);
-    this.props.edit_Item(form_data);
+  form_edit = async e => {
+    try {
+      e.preventDefault();
+      const form_data = {
+        id: this.props.product.id,
+        product_Name: document.getElementById("product_Name").value,
+        price: document.getElementById("price").value,
+        quantity: document.getElementById("quantity").value
+      };
+      let response = await this.props.edit_Item(form_data);
+      if (response === 200) {
+        this.props.show_popup();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   render() {

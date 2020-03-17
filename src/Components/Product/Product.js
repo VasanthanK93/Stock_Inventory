@@ -1,22 +1,31 @@
 import React from "react";
 import Popup from "../Popup/Popup";
+import DeletePopup from "../DeletePopup/DeletePopup";
 
 class Product extends React.Component {
   constructor() {
     super();
     this.state = {
-      showPopup: false
+      showPopup: false,
+      showDelete: false
     };
     this.togglePopup = this.togglePopup.bind(this);
+    this.handle_delete = this.handle_delete.bind(this);
     this.delete_item = this.delete_item.bind(this);
   }
-  togglePopup = () => {
-    this.setState({ showPopup: !this.state.showPopup });
+  togglePopup = async () => {
+    await this.setState({ showPopup: !this.state.showPopup });
   };
-  delete_item = () => {
+
+  handle_delete = async () => {
+    await this.setState({ showDelete: !this.state.showDelete });
+  };
+
+  delete_item = async e => {
     const id = this.props.product.id;
-    this.props.delete_item(id);
+    await this.props.delete_item(id);
   };
+
   render() {
     return (
       <div className="col-lg-3 mb-3">
@@ -46,7 +55,6 @@ class Product extends React.Component {
             {this.state.showPopup ? (
               <Popup
                 Method="Edit Item"
-                show_popup={this.togglePopup.bind(this)}
                 edit_Item={this.props.edit_Item}
                 product={this.props.product}
                 closePopup={this.togglePopup.bind(this)}
@@ -54,10 +62,17 @@ class Product extends React.Component {
             ) : null}
             <button
               className="btn btn-outline-danger"
-              onClick={this.delete_item}
+              onClick={this.handle_delete}
             >
               Delete
             </button>
+            {this.state.showDelete ? (
+              <DeletePopup
+                product={this.props.product}
+                toggleDelete={this.handle_delete.bind(this)}
+                delete_item={this.delete_item.bind(this)}
+              />
+            ) : null}
           </div>
         </div>
       </div>

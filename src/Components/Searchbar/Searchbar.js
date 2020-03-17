@@ -5,10 +5,10 @@ class Searchbar extends React.Component {
     super(props);
     this.search_item = this.search_item.bind(this);
   }
-  search_item = e => {
+  search_item =async  e => {
     e.preventDefault();
     const data = document.getElementById("search_value").value;
-    this.props.search_item(data);
+    await this.props.search_item(data);
   };
   render() {
     return (

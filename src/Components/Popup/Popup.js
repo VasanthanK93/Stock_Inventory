@@ -42,7 +42,9 @@ class Popup extends React.Component {
         quantity: this.state.quantity
       };
       let response = await this.props.add_Item(form_data);
-      console.log(response);
+      if (response === 200) {
+        await this.props.closePopup();
+      }
     } catch (e) {
       console.log(e);
     }
@@ -59,7 +61,7 @@ class Popup extends React.Component {
       };
       let response = await this.props.edit_Item(form_data);
       if (response === 200) {
-        this.props.show_popup();
+        await this.props.closePopup();
       }
     } catch (e) {
       console.log(e);
@@ -69,17 +71,19 @@ class Popup extends React.Component {
   render() {
     return (
       <div className="popup">
-        <div className="popup_inner">
-          <div className="modal-header bg-dark">
-            <h6 className="modal-title text-white">{this.props.Method}</h6>
-            <button
-              className="close text-white"
-              onClick={this.props.closePopup}
-            >
-              X
-            </button>
-          </div>
-          {this.props.product.Method === "Add Item" ? (
+        {this.props.product.Method === "Add Item" ? (
+          <div className="popup_inner">
+            <div className="modal-header bg-dark">
+              <h6 className="modal-title text-white">
+                {this.props.product.Method}
+              </h6>
+              <button
+                className="close text-white"
+                onClick={this.props.closePopup}
+              >
+                X
+              </button>
+            </div>
             <div className="modal-body">
               <form>
                 <div className="form-group">
@@ -146,7 +150,20 @@ class Popup extends React.Component {
                 </div>
               </form>
             </div>
-          ) : (
+          </div>
+        ) : (
+          <div className="popup_inner">
+            <div className="modal-header bg-dark">
+              <h6 className="modal-title text-white">
+                {this.props.product.Method}
+              </h6>
+              <button
+                className="close text-white"
+                onClick={this.props.closePopup}
+              >
+                X
+              </button>
+            </div>
             <div className="modal-body">
               <form>
                 <div className="form-group">
@@ -202,6 +219,7 @@ class Popup extends React.Component {
                 <div className="modal-footer">
                   <button
                     type="submit"
+                    value="Submit"
                     className="btn btn-info"
                     onClick={this.form_edit}
                   >
@@ -217,8 +235,8 @@ class Popup extends React.Component {
                 </div>
               </form>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   }

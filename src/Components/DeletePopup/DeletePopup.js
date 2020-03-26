@@ -1,7 +1,13 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { deleteData } from '../../actions';
 import "./DeletePopup.css";
 
 class DeletePopup extends React.Component {
+  deleteMethod=async e=>{
+    const { deleteData } = this.props; 
+    await deleteData(this.props.product.id)
+  }
   render() {
     return (
       <div className="popup">
@@ -18,12 +24,12 @@ class DeletePopup extends React.Component {
           <div className="modal-body">
             <p>
               Are you sure you want to delete{" "}
-              <b>{this.props.product.product_Name}</b>
+              <b>{this.props.product.product_Name}</b>{" "}
               from the stock?
             </p>
           </div>
           <div className="modal-footer">
-            <button className="btn btn-danger" onClick={this.props.delete_item}>
+            <button className="btn btn-danger" onClick={this.deleteMethod}>
               Delete
             </button>
             <button className="btn btn-info" onClick={this.props.toggleDelete}>
@@ -36,4 +42,4 @@ class DeletePopup extends React.Component {
   }
 }
 
-export default DeletePopup;
+export default connect (null,{deleteData}) (DeletePopup);

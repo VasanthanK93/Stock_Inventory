@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { addData,editData } from '../../actions';
 import "./Popup.css";
 
 class Popup extends React.Component {
@@ -34,38 +36,30 @@ class Popup extends React.Component {
   };
 
   form_add = async e => {
-    try {
       e.preventDefault();
       const form_data = {
         product_Name: this.state.name,
         price: this.state.price,
         quantity: this.state.quantity
       };
-      let response = await this.props.add_Item(form_data);
-      if (response === 200) {
-        await this.props.closePopup();
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+      let {addData} = this.props
+      await addData(form_data)
+      await this.props.closePopup();
+       };
 
   form_edit = async e => {
-    try {
       e.preventDefault();
       const form_data = {
         id: this.props.product.id,
+        deleteStatus : this.props.product.deleteStatus,
+        image : this.props.product.image,
         product_Name: document.getElementById("product_Name").value,
-        price: document.getElementById("price").value,
-        quantity: document.getElementById("quantity").value
+        price: parseInt(document.getElementById("price").value),
+        quantity: parseInt(document.getElementById("quantity").value)
       };
-      let response = await this.props.edit_Item(form_data);
-      if (response === 200) {
+      let {editData} = this.props
+      await editData(form_data);
         await this.props.closePopup();
-      }
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   render() {
@@ -242,4 +236,4 @@ class Popup extends React.Component {
   }
 }
 
-export default Popup;
+export default connect (null,{addData,editData}) (Popup);

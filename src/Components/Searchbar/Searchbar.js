@@ -1,14 +1,13 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { fetchDataByName } from '../../actions';
 
 class Searchbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.search_item = this.search_item.bind(this);
-  }
   search_item =async  e => {
     e.preventDefault();
-    const data = document.getElementById("search_value").value;
-    await this.props.search_item(data);
+    const data = document.getElementById("search_value").value,
+    {fetchDataByName} = this.props
+    await fetchDataByName(data)
   };
   render() {
     return (
@@ -33,4 +32,4 @@ class Searchbar extends React.Component {
   }
 }
 
-export default Searchbar;
+export default connect (null,{fetchDataByName}) (Searchbar);

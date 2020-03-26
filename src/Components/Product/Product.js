@@ -11,7 +11,6 @@ class Product extends React.Component {
     };
     this.togglePopup = this.togglePopup.bind(this);
     this.handle_delete = this.handle_delete.bind(this);
-    this.delete_item = this.delete_item.bind(this);
   }
   togglePopup = async () => {
     await this.setState({ showPopup: !this.state.showPopup });
@@ -21,10 +20,6 @@ class Product extends React.Component {
     await this.setState({ showDelete: !this.state.showDelete });
   };
 
-  delete_item = async e => {
-    const id = this.props.product.id;
-    await this.props.delete_item(id);
-  };
 
   render() {
     return (
@@ -70,7 +65,6 @@ class Product extends React.Component {
               <DeletePopup
                 product={this.props.product}
                 toggleDelete={this.handle_delete.bind(this)}
-                delete_item={this.delete_item.bind(this)}
               />
             ) : null}
           </div>

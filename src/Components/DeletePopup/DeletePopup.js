@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { deleteData } from '../../actions';
-import "./DeletePopup.css";
 
 class DeletePopup extends React.Component {
   deleteMethod=async e=>{
@@ -11,7 +10,8 @@ class DeletePopup extends React.Component {
   render() {
     return (
       <div className="popup">
-        <div className="popup_inner">
+      <div className="modal-dialog bg-light rounded">
+      <div className="modal-content">
           <div className="modal-header bg-dark">
             <h6 className="modal-title text-white">Delete Item?</h6>
             <button
@@ -37,6 +37,7 @@ class DeletePopup extends React.Component {
             </button>
           </div>
         </div>
+      </div>
       </div>
     );
   }

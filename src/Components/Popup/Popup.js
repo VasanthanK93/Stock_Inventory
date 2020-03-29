@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { addData,editData } from '../../actions';
-import "./Popup.css";
+
 
 class Popup extends React.Component {
   constructor(props) {
@@ -64,9 +64,11 @@ class Popup extends React.Component {
 
   render() {
     return (
-      <div className="popup">
+      <div>
         {this.props.product.Method === "Add Item" ? (
-          <div className="popup_inner">
+          <div className="popup">
+          <div className="modal-dialog bg-light rounded">
+          <div className="modal-content">
             <div className="modal-header bg-dark">
               <h6 className="modal-title text-white">
                 {this.props.product.Method}
@@ -145,11 +147,15 @@ class Popup extends React.Component {
               </form>
             </div>
           </div>
+          </div>
+          </div>
         ) : (
-          <div className="popup_inner">
+          <div className="popup">
+          <div className="modal-dialog bg-light rounded">
+          <div className="modal-content">
             <div className="modal-header bg-dark">
               <h6 className="modal-title text-white">
-                {this.props.product.Method}
+                {this.props.Method}
               </h6>
               <button
                 className="close text-white"
@@ -229,6 +235,8 @@ class Popup extends React.Component {
                 </div>
               </form>
             </div>
+          </div>
+          </div>
           </div>
         )}
       </div>
